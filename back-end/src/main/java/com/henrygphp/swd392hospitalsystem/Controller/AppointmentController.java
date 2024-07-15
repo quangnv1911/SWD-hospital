@@ -1,6 +1,7 @@
 package com.henrygphp.swd392hospitalsystem.Controller;
 
 import com.henrygphp.swd392hospitalsystem.DTO.AppointmentInfoDTO;
+import com.henrygphp.swd392hospitalsystem.DTO.Req.AddAppointmentReq;
 import com.henrygphp.swd392hospitalsystem.Models.Appointment;
 import com.henrygphp.swd392hospitalsystem.Services.AppointmentService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,11 @@ public class AppointmentController {
     @PostMapping("/add")
     public ResponseEntity<Appointment> addAppointment(Appointment appointment) {
         return new ResponseEntity<>(appointmentService.addAppointment(appointment), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/add")
+    public ResponseEntity<AddAppointmentReq> getAppointmentMenu(){
+        return new ResponseEntity<>(new AddAppointmentReq(), HttpStatus.OK);
     }
 
     // Get appointment by ID
