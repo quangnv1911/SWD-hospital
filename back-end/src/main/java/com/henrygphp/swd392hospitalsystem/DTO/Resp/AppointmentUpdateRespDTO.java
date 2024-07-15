@@ -1,6 +1,6 @@
 package com.henrygphp.swd392hospitalsystem.DTO.Resp;
 
-import com.henrygphp.swd392hospitalsystem.DTO.AppointmentInfoDTO;
+import com.henrygphp.swd392hospitalsystem.DTO.All.AppointmentDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AppointmentUpdateRespDTO {
     private String status;
-    private AppointmentInfoDTO appointment;
+    private AppointmentDTO appointment;
 }

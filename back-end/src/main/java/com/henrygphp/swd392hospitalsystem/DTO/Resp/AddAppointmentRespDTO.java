@@ -1,4 +1,4 @@
-package com.henrygphp.swd392hospitalsystem.DTO.Req;
+package com.henrygphp.swd392hospitalsystem.DTO.Resp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class AddAppointmentReq {
+public class AddAppointmentRespDTO {
     private Integer patientId;
     private Integer doctorId;
     private Integer receptionistId;
@@ -16,5 +16,4 @@ public class AddAppointmentReq {
     private String appointmentEndTime;
     private String reason;
     private String status;
-
 }

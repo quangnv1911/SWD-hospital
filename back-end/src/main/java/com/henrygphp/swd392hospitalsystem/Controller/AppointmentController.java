@@ -1,13 +1,14 @@
 package com.henrygphp.swd392hospitalsystem.Controller;
 
-import com.henrygphp.swd392hospitalsystem.DTO.AppointmentInfoDTO;
-import com.henrygphp.swd392hospitalsystem.DTO.Req.AddAppointmentReq;
+import com.henrygphp.swd392hospitalsystem.DTO.All.AppointmentDTO;
+import com.henrygphp.swd392hospitalsystem.DTO.Resp.AddAppointmentRespDTO;
+import com.henrygphp.swd392hospitalsystem.DTO.StatusDTO;
 import com.henrygphp.swd392hospitalsystem.Models.Appointment;
+import com.henrygphp.swd392hospitalsystem.Models.Status;
 import com.henrygphp.swd392hospitalsystem.Services.AppointmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.format.DateTimeFormatter;
@@ -26,56 +27,52 @@ public class AppointmentController {
         return new ResponseEntity<>(appointmentService.addAppointment(appointment), HttpStatus.CREATED);
     }
 
-    @GetMapping("/add")
-    public ResponseEntity<AddAppointmentReq> getAppointmentMenu(){
-        return new ResponseEntity<>(new AddAppointmentReq(), HttpStatus.OK);
-    }
+//    @GetMapping("/add")
+//    public ResponseEntity<AddAppointmentRespDTO> getAppointmentMenu(){
+//        return new ResponseEntity<>(new AddAppointmentRespDTO(), HttpStatus.OK);
+//    }
 
     // Get appointment by ID
     @GetMapping("/{id}")
-    public ResponseEntity<AppointmentInfoDTO> getAppointmentById(@PathVariable Integer id) {
+    public ResponseEntity<AppointmentDTO> getAppointmentById(@PathVariable Long id) {
         Optional<Appointment> appointment = appointmentService.getAppointmentById(id);
-        return appointment.map(value -> new ResponseEntity<>(new AppointmentInfoDTO(value.getAppointmentId(),
-                        value.getAppointmentDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                        value.getAppointmentStartTime().format(DateTimeFormatter.ofPattern("HH:mm"))
-                                + " - " + value.getAppointmentEndTime().format(DateTimeFormatter.ofPattern("HH:mm")),
-                        value.getStatus(), value.getReason(), value.getPatient().getPatientId(),
-                        value.getDoctor().getDoctorId()), HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return appointment.map(value -> new ResponseEntity<>(appointmentService.convertToDTO(value), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     // Get appointments by patient ID
     @GetMapping("/patient/{id}")
-    public ResponseEntity<List<AppointmentInfoDTO>> getAppointmentsByPatientId(@PathVariable Integer id) {
-        List<AppointmentInfoDTO> appointments = appointmentService.getAppointmentsByPatientId(id).stream().map(appointment -> new AppointmentInfoDTO(appointment.getAppointmentId(),
-                appointment.getAppointmentDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                appointment.getAppointmentStartTime().format(DateTimeFormatter.ofPattern("HH:mm"))
-                        + " - " + appointment.getAppointmentEndTime().format(DateTimeFormatter.ofPattern("HH:mm")),
-                appointment.getStatus(), appointment.getReason(), appointment.getPatient().getPatientId(),
-                appointment.getDoctor().getDoctorId())).toList();
-        //Check if the list is empty
-        if(appointments.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(appointments, HttpStatus.OK);
+    public ResponseEntity<List<AppointmentDTO>> getAppointmentsByPatientId(@PathVariable Long id) {
+        List<Appointment> appointments = appointmentService.getAppointmentsByPatientId(id);
+        return new ResponseEntity<>(appointmentService.convertToDTOList(appointments), HttpStatus.OK);
     }
 
     //Get Future appointments by patient ID
 
     // Update appointment
     @PutMapping("/{id}")
-    public ResponseEntity<Appointment> updateAppointment(@PathVariable Integer id, Appointment appointment) {
-        appointment.setAppointmentId(id);
-        Optional<Appointment> updatedAppointment = appointmentService.updateAppointment(appointment);
-        return updatedAppointment.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<AppointmentDTO> updateAppointment(@PathVariable Long id, @RequestBody AppointmentDTO appointmentDTO) {
+        //Check if the appointment exists
+        Optional<Appointment> appointment = appointmentService.getAppointmentById(id);
+        if (appointment.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else{
+            Optional<Appointment> newAppointment = appointmentService.updateAppointment(appointmentService.convertToEntity(appointmentDTO));
+            return new ResponseEntity<>(appointmentService.convertToDTO(newAppointment.get()), HttpStatus.OK);
+        }
     }
 
     // Delete appointment by ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Appointment> deleteAppointmentById(@PathVariable Integer id) {
+    public ResponseEntity<Appointment> deleteAppointmentById(@PathVariable Long id) {
         appointmentService.deleteAppointmentById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    //Get Appointment List of patient by status
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<AppointmentDTO>> getAppointmentListByStatus(@PathVariable Status status) {
+        return new ResponseEntity<>(appointmentService.convertToDTOList(appointmentService.getAppointmentListByStatus(status)), HttpStatus.OK);
     }
 
 }

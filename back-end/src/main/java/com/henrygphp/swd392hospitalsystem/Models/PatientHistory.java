@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class PatientHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer historyId;
+    private Long patientHistoryId;
 
     private LocalDate visitDate;
 

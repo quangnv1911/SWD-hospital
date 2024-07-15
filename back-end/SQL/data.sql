@@ -1,34 +1,7 @@
-Create database SWD_HospitalManagement;
+# Create database SWD_HospitalManagement;
 
 use SWD_HospitalManagement;
 
--- Tạo dữ liệu mẫu cho bảng Doctor
-INSERT INTO Doctor (doctorId, LastName, PhoneNumber, Specialty, email, firstName) VALUES
-                                                                                      (1, 'Smith', '1234567890', 'Cardiology', 'smith@example.com', 'John'),
-                                                                                      (2, 'Johnson', '2345678901', 'Neurology', 'johnson@example.com', 'Michael'),
-                                                                                      (3, 'Williams', '3456789012', 'Orthopedics', 'williams@example.com', 'David'),
-                                                                                      (4, 'Brown', '4567890123', 'Pediatrics', 'brown@example.com', 'James'),
-                                                                                      (5, 'Jones', '5678901234', 'Dermatology', 'jones@example.com', 'Robert'),
-                                                                                      (6, 'Garcia', '6789012345', 'Ophthalmology', 'garcia@example.com', 'Maria'),
-                                                                                      (7, 'Martinez', '7890123456', 'Gastroenterology', 'martinez@example.com', 'Carlos'),
-                                                                                      (8, 'Rodriguez', '8901234567', 'Pulmonology', 'rodriguez@example.com', 'Luis'),
-                                                                                      (9, 'Lee', '9012345678', 'Urology', 'lee@example.com', 'Anna'),
-                                                                                      (10, 'Walker', '0123456789', 'Endocrinology', 'walker@example.com', 'Nancy');
-
--- Tạo dữ liệu mẫu cho bảng Patient
-INSERT INTO Patient (patientId, address, dob, email, firstName, lastName, phoneNumber) VALUES
-                                                                                           (1, '123 Elm St', '1980-01-01', 'patient1@example.com', 'Alice', 'Smith', '1112223333'),
-                                                                                           (2, '456 Oak St', '1985-02-02', 'patient2@example.com', 'Bob', 'Johnson', '2223334444'),
-                                                                                           (3, '789 Pine St', '1990-03-03', 'patient3@example.com', 'Charlie', 'Williams', '3334445555'),
-                                                                                           (4, '101 Maple St', '1975-04-04', 'patient4@example.com', 'David', 'Brown', '4445556666'),
-                                                                                           (5, '202 Birch St', '1965-05-05', 'patient5@example.com', 'Emma', 'Jones', '5556667777'),
-                                                                                           (6, '303 Cedar St', '1995-06-06', 'patient6@example.com', 'Fiona', 'Garcia', '6667778888'),
-                                                                                           (7, '404 Walnut St', '2000-07-07', 'patient7@example.com', 'George', 'Martinez', '7778889999'),
-                                                                                           (8, '505 Chestnut St', '1998-08-08', 'patient8@example.com', 'Hannah', 'Rodriguez', '8889990000'),
-                                                                                           (9, '606 Ash St', '1992-09-09', 'patient9@example.com', 'Ian', 'Lee', '9990001111'),
-                                                                                           (10, '707 Fir St', '1988-10-10', 'patient10@example.com', 'Jack', 'Walker', '0001112222');
-
--- Tạo dữ liệu mẫu cho bảng Receptionist
 INSERT INTO Receptionist (receptionistId, PhoneNumber, email, firstName, lastName) VALUES
                                                                                        (1, '1234567890', 'receptionist1@example.com', 'Jane', 'Doe'),
                                                                                        (2, '2345678901', 'receptionist2@example.com', 'Emily', 'Smith'),
@@ -41,28 +14,50 @@ INSERT INTO Receptionist (receptionistId, PhoneNumber, email, firstName, lastNam
                                                                                        (9, '9012345678', 'receptionist9@example.com', 'Evelyn', 'Rodriguez'),
                                                                                        (10, '0123456789', 'receptionist10@example.com', 'Abigail', 'Lee');
 
--- Tạo dữ liệu mẫu cho bảng Appointment
-INSERT INTO Appointment (appointmentId, appointmentDate, appointmentTime, reason, receptionistId, status, doctorId, patientId, appointmentEndTime, appointmentStartTime) VALUES
-                                                                                                                                                                             (1, '2023-07-15', '2023-07-15 10:00:00', 'Routine Checkup', 1, 'Scheduled', 1, 1, '2023-07-15 11:00:00', '2023-07-15 10:00:00'),
-                                                                                                                                                                             (2, '2023-07-16', '2023-07-16 11:00:00', 'Flu Symptoms', 2, 'Scheduled', 2, 2, '2023-07-16 12:00:00', '2023-07-16 11:00:00'),
-                                                                                                                                                                             (3, '2023-07-17', '2023-07-17 12:00:00', 'Back Pain', 3, 'Scheduled', 3, 3, '2023-07-17 13:00:00', '2023-07-17 12:00:00'),
-                                                                                                                                                                             (4, '2023-07-18', '2023-07-18 13:00:00', 'Skin Rash', 4, 'Scheduled', 4, 4, '2023-07-18 14:00:00', '2023-07-18 13:00:00'),
-                                                                                                                                                                             (5, '2023-07-19', '2023-07-19 14:00:00', 'Headache', 5, 'Scheduled', 5, 5, '2023-07-19 15:00:00', '2023-07-19 14:00:00'),
-                                                                                                                                                                             (6, '2023-07-20', '2023-07-20 15:00:00', 'Eye Checkup', 6, 'Scheduled', 6, 6, '2023-07-20 16:00:00', '2023-07-20 15:00:00'),
-                                                                                                                                                                             (7, '2023-07-21', '2023-07-21 16:00:00', 'Stomach Pain', 7, 'Scheduled', 7, 7, '2023-07-21 17:00:00', '2023-07-21 16:00:00'),
-                                                                                                                                                                             (8, '2023-07-22', '2023-07-22 17:00:00', 'Cough', 8, 'Scheduled', 8, 8, '2023-07-22 18:00:00', '2023-07-22 17:00:00'),
-                                                                                                                                                                             (9, '2023-07-23', '2023-07-23 18:00:00', 'Kidney Pain', 9, 'Scheduled', 9, 9, '2023-07-23 19:00:00', '2023-07-23 18:00:00'),
-                                                                                                                                                                             (10, '2023-07-24', '2023-07-24 19:00:00', 'Diabetes Checkup', 10, 'Scheduled', 10, 10, '2023-07-24 20:00:00', '2023-07-24 19:00:00');
+INSERT INTO Patient (patientId, address, email, firstName, lastName, phoneNumber, dob, gender) VALUES
+                                                                                           (1, '123 Main St', 'patient1@example.com', 'John', 'Doe', '555-1234', '1990-01-01', 'MALE'),
+                                                                                           (2, '456 Elm St', 'patient2@example.com', 'Jane', 'Smith', '555-5678', '1985-05-15', 'MALE'),
+                                                                                           (3, '789 Oak St', 'patient3@example.com', 'Alice', 'Johnson', '555-8765', '1970-10-10', 'MALE'),
+                                                                                           (4, '101 Maple St', 'patient4@example.com', 'Bob', 'Brown', '555-4321', '2000-07-07', 'MALE'),
+                                                                                           (5, '202 Pine St', 'patient5@example.com', 'Charlie', 'Davis', '555-6789', '1965-03-03', 'MALE'),
+                                                                                           (6, '303 Birch St', 'patient6@example.com', 'David', 'Wilson', '555-3456', '1995-12-12', 'FEMALE'),
+                                                                                           (7, '404 Cedar St', 'patient7@example.com', 'Eve', 'White', '555-6543', '1980-02-28', 'FEMALE'),
+                                                                                           (8, '505 Spruce St', 'patient8@example.com', 'Frank', 'Moore', '555-7890', '1975-09-09', 'FEMALE'),
+                                                                                           (9, '606 Fir St', 'patient9@example.com', 'Grace', 'Taylor', '555-0123', '1992-06-06', 'FEMALE'),
+                                                                                           (10, '707 Redwood St', 'patient10@example.com', 'Hank', 'Anderson', '555-2345', '1988-11-11', 'FEMALE');
 
--- Tạo dữ liệu mẫu cho bảng PatientHistory
-INSERT INTO PatientHistory (historyId, description, diagnosis, notes, prescription, visitDate, doctorId, patientId) VALUES
-                                                                                                                        (1, 'Checkup for flu symptoms', 'Flu', 'Rest and hydration recommended', 'Paracetamol', '2023-07-15', 1, 1),
-                                                                                                                        (2, 'Routine checkup', 'Healthy', 'No issues found', 'None', '2023-07-16', 2, 2),
-                                                                                                                        (3, 'Back pain examination', 'Muscle strain', 'Physical therapy recommended', 'Ibuprofen', '2023-07-17', 3, 3),
-                                                                                                                        (4, 'Skin rash', 'Dermatitis', 'Avoid allergens', 'Hydrocortisone cream', '2023-07-18', 4, 4),
-                                                                                                                        (5, 'Headache', 'Tension headache', 'Stress management techniques', 'Acetaminophen', '2023-07-19', 5, 5),
-                                                                                                                        (6, 'Eye checkup', 'Healthy', 'No issues found', 'None', '2023-07-20', 6, 6),
-                                                                                                                        (7, 'Stomach pain', 'Gastritis', 'Avoid spicy food', 'Antacids', '2023-07-21', 7, 7),
-                                                                                                                        (8, 'Cough', 'Bronchitis', 'Rest and fluids', 'Cough syrup', '2023-07-22', 8, 8),
-                                                                                                                        (9, 'Kidney pain', 'Kidney stones', 'Increase water intake', 'Pain relievers', '2023-07-23', 9, 9),
-                                                                                                                        (10, 'Diabetes checkup', 'Type 2 diabetes', 'Monitor blood sugar levels', 'Metformin', '2023-07-24', 10, 10);
+INSERT INTO Doctor (doctorId, lastName, firstName, email, speciality) VALUES
+                                                                         (1, 'Williams', 'Emily', 'doctor1@example.com', 'Cardiology'),
+                                                                         (2, 'Jones', 'Michael', 'doctor2@example.com', 'Neurology'),
+                                                                         (3, 'Miller', 'Sarah', 'doctor3@example.com', 'Pediatrics'),
+                                                                         (4, 'Davis', 'James', 'doctor4@example.com', 'Orthopedics'),
+                                                                         (5, 'Garcia', 'David', 'doctor5@example.com', 'Dermatology'),
+                                                                         (6, 'Rodriguez', 'Maria', 'doctor6@example.com', 'Ophthalmology'),
+                                                                         (7, 'Martinez', 'Robert', 'doctor7@example.com', 'Psychiatry'),
+                                                                         (8, 'Hernandez', 'Linda', 'doctor8@example.com', 'Gastroenterology'),
+                                                                         (9, 'Lopez', 'William', 'doctor9@example.com', 'Endocrinology'),
+                                                                         (10, 'Gonzalez', 'Elizabeth', 'doctor10@example.com', 'Rheumatology');
+
+INSERT INTO Appointment (appointmentId, appointmentDate, appointmentStartTime, appointmentEndTime, doctorId, patientId, reason, status, receptionistId) VALUES
+                                                                                                                                            (1, '2024-07-01', '10:00:00', '10:30:00', 1, 1, 'Regular Checkup', 'PENDING', 1),
+                                                                                                                                            (2, '2024-07-02', '11:00:00', '11:30:00', 2, 2, 'Headache', 'CONFIRMED',2),
+                                                                                                                                            (3, '2024-07-03', '09:00:00', '09:30:00', 3, 3, 'Fever', 'CANCELLED',3),
+                                                                                                                                            (4, '2024-07-04', '14:00:00', '14:30:00', 4, 4, 'Knee Pain', 'PENDING',4),
+                                                                                                                                            (5, '2024-07-05', '15:00:00', '15:30:00', 5, 5, 'Skin Rash', 'CONFIRMED',5),
+                                                                                                                                            (6, '2024-07-06', '13:00:00', '13:30:00', 6, 6, 'Eye Checkup', 'CANCELLED',6),
+                                                                                                                                            (7, '2024-07-07', '08:00:00', '08:30:00', 7, 7, 'Anxiety', 'PENDING',7),
+                                                                                                                                            (8, '2024-07-08', '10:30:00', '11:00:00', 8, 8, 'Stomach Ache', 'CONFIRMED',8),
+                                                                                                                                            (9, '2024-07-09', '12:00:00', '12:30:00', 9, 9, 'Diabetes Management', 'CANCELLED',9),
+                                                                                                                                            (10, '2024-07-10', '14:30:00', '15:00:00', 10, 10, 'Arthritis', 'PENDING',10);
+
+INSERT INTO PatientHistory (patientHistoryId, visitDate, doctorId, patientId, diagnosis, notes) VALUES
+                                                                                                    (1, '2024-07-01', 1, 1, 'Good Health', 'No issues. Regular checkup.'),
+                                                                                                    (2, '2024-07-02', 2, 2, 'Migraine', 'Prescribed medication.'),
+                                                                                                    (3, '2024-07-03', 3, 3, 'Viral Fever', 'Advised rest and fluids.'),
+                                                                                                    (4, '2024-07-04', 4, 4, 'Sprained Knee', 'Referred to physiotherapy.'),
+                                                                                                    (5, '2024-07-05', 5, 5, 'Eczema', 'Prescribed topical ointment.'),
+                                                                                                    (6, '2024-07-06', 6, 6, 'Normal Vision', 'Routine eye checkup.'),
+                                                                                                    (7, '2024-07-07', 7, 7, 'Anxiety', 'Referred to counseling.'),
+                                                                                                    (8, '2024-07-08', 8, 8, 'Gastritis', 'Prescribed antacids.'),
+                                                                                                    (9, '2024-07-09', 9, 9, 'Type 2 Diabetes', 'Adjusting medication dosage.'),
+                                                                                                    (10, '2024-07-10', 10, 10, 'Rheumatoid Arthritis', 'Prescribed anti-inflammatory drugs.');
