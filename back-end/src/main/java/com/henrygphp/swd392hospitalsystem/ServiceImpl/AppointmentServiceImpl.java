@@ -66,7 +66,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         ReceptionistDTO receptionistDTO = new ReceptionistDTO(receptionist.getReceptionistId(), receptionist.getFirstName(), receptionist.getLastName(), receptionist.getPhoneNumber(), receptionist.getEmail());
 
         return new AppointmentDTO(appointment.getAppointmentId(),
-                appointment.getAppointmentDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                appointment.getAppointmentDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
                 appointment.getAppointmentStartTime().format(DateTimeFormatter.ofPattern("HH:mm")),
                 appointment.getAppointmentEndTime().format(DateTimeFormatter.ofPattern("HH:mm")),
                 appointment.getStatus(),

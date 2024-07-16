@@ -74,5 +74,4 @@ public class AppointmentController {
     public ResponseEntity<List<AppointmentDTO>> getAppointmentListByStatus(@PathVariable Status status) {
         return new ResponseEntity<>(appointmentService.convertToDTOList(appointmentService.getAppointmentListByStatus(status)), HttpStatus.OK);
     }
-
 }
