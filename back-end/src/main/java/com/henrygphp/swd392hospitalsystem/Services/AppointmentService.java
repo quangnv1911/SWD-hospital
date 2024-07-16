@@ -11,12 +11,15 @@ import java.util.Optional;
 @Service
 public interface AppointmentService{
     Appointment addAppointment(Appointment appointment);
+
     Optional<Appointment> getAppointmentById(Long id);
 
     List<Appointment> getAppointmentsByPatientId(Long patientId);
 
     Optional<Appointment> updateAppointment(Appointment appointment);
+
     void deleteAppointment(Appointment appointment);
+
     void deleteAppointmentById(Long id);
 
     AppointmentDTO convertToDTO(Appointment appointment);

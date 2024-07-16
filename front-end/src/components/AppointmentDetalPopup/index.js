@@ -30,14 +30,16 @@ function PatientDetailPopup({ appointment, statusValue }) {
             data.status = status;
             if(statusValue === 'PENDING'){
                 data.doctorInfo.doctorId = selectedDoctorId;
-                data.note = note;
+                // data.note = note;
             }
             fetch(
                 `http://localhost:8080/appointment/${appointment.id}`,
                 {
+                    headers:{
+                        "Content-Type": "application/json",
+                    },
                     method: "PUT",
                     body: JSON.stringify(data),
-
                 }
             )
                 .then((response) => {
@@ -134,12 +136,12 @@ function PatientDetailPopup({ appointment, statusValue }) {
                                 <label className="col-form-label text-label" htmlFor="patientMoreInfo">Thông tin các lần khám trước:</label>
                                 <PatientMedicalHistory patientId={appointment.patientInfo.patientId} />
                             </div>
-
+{/* 
                             <div className="form-group col-12">
                                 <label className="col-form-label text-label" htmlFor="patientNote">Ghi chú:</label>
                                 <textarea className="form-control" name="patientNote" id="patientNote" value={note}
                 onChange={handleNoteChange}></textarea>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </Modal.Body>

@@ -8,9 +8,13 @@ import com.henrygphp.swd392hospitalsystem.Models.*;
 import com.henrygphp.swd392hospitalsystem.Repositories.AppointmentRepo;
 import com.henrygphp.swd392hospitalsystem.Services.AppointmentService;
 import com.henrygphp.swd392hospitalsystem.Services.DoctorService;
+import com.henrygphp.swd392hospitalsystem.Services.PatientService;
+import com.henrygphp.swd392hospitalsystem.Services.ReceptionistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +25,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     private final AppointmentRepo appointmentRepo;
     private final DoctorService doctorService;
+    private final PatientService patientService;
+    private final ReceptionistService ReceptionistService;
+    private final ReceptionistService receptionistService;
 
     @Override
     public Appointment addAppointment(Appointment appointment) {
@@ -83,7 +90,17 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public Appointment convertToEntity(AppointmentDTO appointmentDTO) {
-        return null;
+        return new Appointment(
+                appointmentDTO.getId(),
+                LocalDate.parse(appointmentDTO.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                LocalTime.parse(appointmentDTO.getStartTime(), DateTimeFormatter.ofPattern("HH:mm")),
+                LocalTime.parse(appointmentDTO.getEndTime(), DateTimeFormatter.ofPattern("HH:mm")),
+                appointmentDTO.getReason(),
+                appointmentDTO.getStatus(),
+                patientService.getPatientById(appointmentDTO.getPatientInfo().getPatientId()).get(),
+                doctorService.getDoctorById(appointmentDTO.getDoctorInfo().getDoctorId()).get(),
+                receptionistService.getReceptionistById(appointmentDTO.getReceptionistInfo().getReceptionistId()).get()
+        );
     }
 
     @Override

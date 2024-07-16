@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/appointment")
 public class AppointmentController {
     private final AppointmentService appointmentService;
@@ -51,27 +52,40 @@ public class AppointmentController {
     //Get Future appointments by patient ID
 
     // Update appointment
+//    @PutMapping("/{id}")
+//    public ResponseEntity<UpdateAppointmentReqDTO> updateAppointment(@PathVariable Long id, @RequestBody UpdateAppointmentReqDTO appointmentDTO) {
+//        //Check if the appointment exists
+//        Optional<Appointment> appointment = appointmentService.getAppointmentById(id);
+//        if (appointment.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        else{
+//            Appointment newAppointment = new Appointment(
+//                    appointmentDTO.getId(),
+//                    LocalDate.parse(appointmentDTO.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+//                    LocalTime.parse(appointmentDTO.getStartTime(), DateTimeFormatter.ofPattern("HH:mm")),
+//                    LocalTime.parse(appointmentDTO.getEndTime(), DateTimeFormatter.ofPattern("HH:mm")),
+//                    appointmentDTO.getReason(),
+//                    appointmentDTO.getStatus(),
+//                    new Patient(appointmentDTO.getPatientId()),
+//                    new Doctor(appointmentDTO.getDoctorId()),
+//                    new Receptionist(appointmentDTO.getReceptionistId())
+//            );
+//            appointmentService.updateAppointment(newAppointment);
+//            return new ResponseEntity<>(appointmentDTO, HttpStatus.OK);
+//        }
+//    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<UpdateAppointmentReqDTO> updateAppointment(@PathVariable Long id, @RequestBody UpdateAppointmentReqDTO appointmentDTO) {
+    public ResponseEntity<AppointmentDTO> updateAppointment(@PathVariable Long id, @RequestBody AppointmentDTO appointmentDTO) {
         //Check if the appointment exists
         Optional<Appointment> appointment = appointmentService.getAppointmentById(id);
         if (appointment.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         else{
-            Appointment newAppointment = new Appointment(
-                    appointmentDTO.getId(),
-                    LocalDate.parse(appointmentDTO.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),
-                    LocalTime.parse(appointmentDTO.getStartTime(), DateTimeFormatter.ofPattern("HH:mm")),
-                    LocalTime.parse(appointmentDTO.getEndTime(), DateTimeFormatter.ofPattern("HH:mm")),
-                    appointmentDTO.getReason(),
-                    appointmentDTO.getStatus(),
-                    new Patient(appointmentDTO.getPatientId()),
-                    new Doctor(appointmentDTO.getDoctorId()),
-                    new Receptionist(appointmentDTO.getReceptionistId())
-            );
-            appointmentService.updateAppointment(newAppointment);
-            return new ResponseEntity<>(appointmentDTO, HttpStatus.OK);
+            Optional<Appointment> newAppointment = appointmentService.updateAppointment(appointmentService.convertToEntity(appointmentDTO));
+            return new ResponseEntity<>(appointmentService.convertToDTO(newAppointment.get()), HttpStatus.OK);
         }
     }
 
