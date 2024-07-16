@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import PatientDetailPopup from "../PatientDetalPopup";
+import PatientDetailPopup from "../AppointmentDetalPopup";
 
 function NewAppointment() {
     const [appointments, setAppointments] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/appointment/new-appointment?status=pending`, {
+        fetch(`http://localhost:8080/appointment/status/PENDING`, {
 
         })
             .then((response) => {
@@ -16,17 +16,8 @@ function NewAppointment() {
             })
 
             .then((dataJson) => {
-                const data = dataJson.map((item) => ({
-                    appointmentId: item.appointmentId,
-                    patientId: item.patientId,
-                    patientName: item.patientName,
-                    patientPhone: item.patientPhone,
-                    patientEmail: item.patientEmail,
-                    dateBooking: item.dateBooking,
-                    status: item.status
-                }));
-
-                return data;
+              
+                return dataJson;
             })
 
             .then((result) => {
@@ -35,14 +26,18 @@ function NewAppointment() {
             });
     }, []);
 
-    const updateAppointmentStatus = (appointmentId) => {
+    const updateAppointmentStatus = (appointment) => {
         if (window.confirm("Bạn có chắc muốn hủy cuộc hẹn này")) {
+           
             fetch(
-                `http://localhost:8080/appointment/${appointmentId}`,
+                `http://localhost:8080/appointment/${appointment.id}`,
                 {
                     method: "PUT",
-
-                    body: JSON.stringify({ status: "cancel" }),
+                    headers: {
+                        "Content-Type": "application/json",
+                        
+                      },
+                    body: JSON.stringify(appointment),
 
                 }
             )
@@ -54,6 +49,8 @@ function NewAppointment() {
                 })
                 .then((data) => {
                     console.log("Data saved successfully:", data);
+                    alert("Cancell successfully");
+                    window.location.reload();
                 })
                 .catch((error) => {
                     console.error("Error saving data:", error);
@@ -70,20 +67,20 @@ function NewAppointment() {
 
             {appointments.map(
                 (appointment) => (
-                    <tr key={appointment.appointmentId}>
-                        <td>{appointment.appointmentId}</td>
-                        <td>{appointment.patientName}</td>
-                        <td>{appointment.patientPhone}</td>
-                        <td>{appointment.patientEmail}</td>
-                        <td>{appointment.dateBooking}</td>
+                    <tr key={appointment.id}>
+                        <td>{appointment.id}</td>
+                        <td>{appointment.patientInfo.firstName} {appointment.patientInfo.lastName} </td>
+                        <td>{appointment.patientInfo.phoneNumber}</td>
+                        <td>{appointment.patientInfo.email}</td>
+                        <td>{appointment.date}</td>
                         <td>
                             <div className="d-flex justify-content-around">
                                 <button type="button" className="ml-3 btn btn-secondary" id="btn-cancel-patient" data-dismiss="modal"
-                                    onClick={() => updateAppointmentStatus(appointment.appointmentId)}>Hủy</button>
+                                    onClick={() => updateAppointmentStatus(appointment)}>Hủy</button>
 
                                 <PatientDetailPopup
                                     statusValue={appointment.status}
-                                    appointmentId={appointment.appointmentId} />
+                                    appointment={appointment} />
                             </div>
                         </td>
                     </tr>

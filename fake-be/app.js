@@ -24,7 +24,7 @@ app.get('/appointment/new-appointment', function (req, res) {
                     patientPhone: "80809",
                     patientEmail: "a@gmail.com",
                     dateBooking: "2030-3-2",
-                    status: "pending"
+                    status: "pending",
                 },
                 {
                     appointmentId: 2,
@@ -33,7 +33,8 @@ app.get('/appointment/new-appointment', function (req, res) {
                     patientPhone: "80809",
                     patientEmail: "a@gmail.com",
                     dateBooking: "2023-20-2",
-                    status: "pending"
+                    status: "pending",
+
                 }
             ];
             res.json(appointments);
@@ -47,7 +48,7 @@ app.get('/appointment/new-appointment', function (req, res) {
                     patientPhone: "80809",
                     patientEmail: "a@gmail.com",
                     dateBooking: "2030-3-2",
-                    status: "confirm"
+                    status: "confirm",
                 },
                 {
                     appointmentId: 2,
@@ -56,7 +57,7 @@ app.get('/appointment/new-appointment', function (req, res) {
                     patientPhone: "80809",
                     patientEmail: "a@gmail.com",
                     dateBooking: "2023-20-2",
-                    status: "confirm"
+                    status: "confirm",
                 }
             ];
             res.json(appointments);
@@ -70,7 +71,7 @@ app.get('/appointment/new-appointment', function (req, res) {
                     patientPhone: "80809",
                     patientEmail: "a@gmail.com",
                     dateBooking: "2030-3-2",
-                    status: "cancel"
+                    status: "cancel",
                 },
                 {
                     appointmentId: 2,
@@ -79,7 +80,7 @@ app.get('/appointment/new-appointment', function (req, res) {
                     patientPhone: "80809",
                     patientEmail: "a@gmail.com",
                     dateBooking: "2023-20-2",
-                    status: "cancel"
+                    status: "cancel",
                 }
             ];
             res.json(appointments);
@@ -104,20 +105,49 @@ app.get('/appointment', function (req, res) {
         patientProfile: "tiền sử bệnh tim", // tiền sử bị bệnh
         InsuranceID: "3242343243", // mã số bảo hiểm
         note: "dsfdsf",
-        reason: "đau bụng"
+        reason: "đau bụng",
+        doctorList:  [
+            {
+                doctorId: 1,
+                doctorName: "Nguyen Van A",
+               
+            },
+            {
+                doctorId: 2,
+                doctorName: "Nguyen Van B",
+            }
+        ],
+        doctorId: 1 // nếu chưa có thì la
     }
 
 
     res.json(patient);
 })
 
+app.get('/doctor', function (req, res) {
+    const appointmentID = req.query.id;
+    // lấy thông tin bệnh nhân theo appointment
+    const doctorList =
+    [
+        {
+            doctorId: 1,
+            doctorName: "Nguyen Van A",
+           
+        },
+        {
+            doctorId: 2,
+            doctorName: "Nguyen Van B",
+        }
+    ];
+    res.json(doctorList);
+})
 
 
 app.put('/appointment/:appointmentId', function (req, res) {
 
     // Request body
     // const requestBodyDTO = {
-    // iD: int, status: string (pending/confirm/cancel)  
+    // iD: int, status: string (pending/confirm/cancel)  , doctorId: 1
     //}
     const appointmentId = req.params.appointmentId;
     const requestBodyDTO = req.body;

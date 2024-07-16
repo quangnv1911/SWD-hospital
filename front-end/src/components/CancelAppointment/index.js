@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import PatientDetailPopup from "../PatientDetalPopup";
+import PatientDetailPopup from "../AppointmentDetalPopup";
 
 function CancelAppointment() {
     const [appointments, setAppointments] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:8080/appointment/new-appointment?status=cancel`, {
+        fetch(`http://localhost:8080/appointment/status/CANCELLED`, {
             
         })
             .then((response) => {
@@ -15,21 +15,13 @@ function CancelAppointment() {
             })
 
             .then((dataJson) => {
-                const data = dataJson.map((item) => ({
-                    appointmentId: item.appointmentId,
-                    patientId: item.patientId,
-                    patientName: item.patientName,
-                    patientPhone: item.patientPhone,
-                    patientEmail: item.patientEmail,
-                    dateBooking: item.dateBooking,
-                    status : item.status
-                }));
+                const data = dataJson;
 
                 return data;
             })
 
             .then((result) => {
-
+                
                 setAppointments(result);
             });
     }, []);
@@ -41,17 +33,17 @@ function CancelAppointment() {
 
             {appointments.map(
                 (appointment) => (
-                    <tr key={appointment.appointmentId}>
-                        <td>{appointment.appointmentId}</td>
-                        <td>{appointment.patientName}</td>
-                        <td>{appointment.patientPhone}</td>
-                        <td>{appointment.patientEmail}</td>
-                        <td>{appointment.dateBooking}</td>
+                    <tr key={appointment.id}>
+                        <td>{appointment.id}</td>
+                        <td>{appointment.patientInfo.firstName} {appointment.patientInfo.lastName} </td>
+                        <td>{appointment.patientInfo.phoneNumber}</td>
+                        <td>{appointment.patientInfo.email}</td>
+                        <td>{appointment.date}</td>
                         <td>
                             <div className="d-flex justify-content-around">
-                                
-                            <PatientDetailPopup appointmentId = {appointment.appointmentId}
-                                                    statusValue={appointment.status}/>
+                                <PatientDetailPopup appointment={appointment}
+                                statusValue={appointment.status}/>
+                            
                             </div>
                         </td>
                     </tr>

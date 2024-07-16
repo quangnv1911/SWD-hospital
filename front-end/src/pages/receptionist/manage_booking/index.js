@@ -10,7 +10,7 @@ const App = () => {
     return (
         <div style={{ minHeight: "600px" }}>
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 className="h3 mb-0 text-gray-800">Manage patients</h1>
+                <h1 className="h3 mb-0 text-gray-800">Quản lí lịch hẹn</h1>
             </div>
             <div className="card shadow mb-4">
                 <div className="card-header py-3">
@@ -25,7 +25,7 @@ const App = () => {
                                 aria-controls="newPatients"
                                 aria-selected={activeTab === 'newPatients'}
                             >
-                                New patients
+                                Cuộc hẹn mới
                             </a>
                         </li>
 
@@ -38,7 +38,7 @@ const App = () => {
                                 aria-controls="patientConfirmed"
                                 aria-selected={activeTab === 'patientConfirmed'}
                             >
-                                Confirmed
+                                Đã xác nhận
                             </a>
                         </li>
                         <li className="nav-item">
@@ -50,7 +50,7 @@ const App = () => {
                                 aria-controls="patientCanceled"
                                 aria-selected={activeTab === 'patientCanceled'}
                             >
-                                Cancelled
+                                Đã hủy
                             </a>
                         </li>
                     </ul>
@@ -68,11 +68,11 @@ const App = () => {
                                     <thead>
                                         <tr>
                                             <th>ID </th>
-                                            <th>Name</th>
-                                            <th>Phone number</th>
+                                            <th>Tên</th>
+                                            <th>Số điện thoại</th>
                                             <th>Email</th>
-                                            <th>Update</th>
-                                            <th className="w-25">Actions</th>
+                                            <th>Ngày đặt</th>
+                                            <th className="w-25"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -91,11 +91,11 @@ const App = () => {
                                     <thead>
                                         <tr>
                                             <th>ID </th>
-                                            <th>Name</th>
-                                            <th>Phone number</th>
+                                            <th>Tên</th>
+                                            <th>Số điện thoại</th>
                                             <th>Email</th>
-                                            <th>Update</th>
-                                            <th className="w-25">Actions</th>
+                                            <th>Ngày đặt</th>
+                                            <th className="w-25"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -113,11 +113,11 @@ const App = () => {
                                     <thead>
                                         <tr>
                                             <th>ID </th>
-                                            <th>Name</th>
-                                            <th>Phone number</th>
+                                            <th>Tên</th>
+                                            <th>Số điện thoại</th>
                                             <th>Email</th>
-                                            <th>Update</th>
-                                            <th className="w-25">Actions</th>
+                                            <th>Ngày đặt</th>
+                                            <th className="w-25"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
