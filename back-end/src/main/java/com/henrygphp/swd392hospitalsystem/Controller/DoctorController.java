@@ -5,6 +5,7 @@ import com.henrygphp.swd392hospitalsystem.DTO.Req.DoctorReqDTO;
 import com.henrygphp.swd392hospitalsystem.Models.Doctor;
 import com.henrygphp.swd392hospitalsystem.Services.DoctorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,13 +44,16 @@ public class DoctorController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/all/available")
+    @GetMapping("/all/available/{appointmentDateStr}/{startTimeStr}/{endTimeStr}")
     //get all available doctors
-    public ResponseEntity<?> getAllAvailableDoctors(@RequestBody DoctorReqDTO doctorReqDTO) {
+    public ResponseEntity<?> getAllAvailableDoctors(
+            @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") String appointmentDateStr,
+            @PathVariable @DateTimeFormat(pattern = "HH:mm") String startTimeStr,
+            @PathVariable @DateTimeFormat(pattern = "HH:mm") String endTimeStr) {
         //Convert to LocalTime and LocalDate
-        LocalDate appointmentDate = LocalDate.parse(doctorReqDTO.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        LocalTime startTime = LocalTime.parse(doctorReqDTO.getStartTime(), DateTimeFormatter.ofPattern("HH:mm"));
-        LocalTime endTime = LocalTime.parse(doctorReqDTO.getEndTime(), DateTimeFormatter.ofPattern("HH:mm"));
+        LocalDate appointmentDate = LocalDate.parse(appointmentDateStr, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        LocalTime startTime = LocalTime.parse(startTimeStr, DateTimeFormatter.ofPattern("HH:mm"));
+        LocalTime endTime = LocalTime.parse(endTimeStr, DateTimeFormatter.ofPattern("HH:mm"));
 
         List<Doctor> doctor = doctorService.getAllAvailableDoctors(appointmentDate, startTime, endTime);
 

@@ -50,11 +50,11 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDTO convertToDTO(Patient patient) {
-        return new PatientDTO(patient.getPatientId(), patient.getFirstName(), patient.getLastName(), patient.getPhoneNumber(), patient.getEmail(), patient.getAddress(), patient.getDob().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), patient.getGender());
+        return new PatientDTO(patient.getPatientId(), patient.getFirstName(), patient.getLastName(), patient.getPhoneNumber(), patient.getEmail(), patient.getAddress(), patient.getDob().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), patient.getGender());
     }
 
     @Override
     public Patient convertToEntity(PatientDTO patientDTO) {
-        return new Patient(patientDTO.getPatientId(), patientDTO.getFirstName(), patientDTO.getLastName(), patientDTO.getPhoneNumber(), patientDTO.getEmail(), patientDTO.getAddress(), LocalDate.parse(patientDTO.getDob(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), patientDTO.getGender());
+        return new Patient(patientDTO.getPatientId(), patientDTO.getFirstName(), patientDTO.getLastName(), patientDTO.getPhoneNumber(), patientDTO.getEmail(), patientDTO.getAddress(), LocalDate.parse(patientDTO.getDob(), DateTimeFormatter.ofPattern("dd-MM-yyyy")), patientDTO.getGender());
     }
 }
