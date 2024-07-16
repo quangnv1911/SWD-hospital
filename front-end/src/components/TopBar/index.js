@@ -1,30 +1,30 @@
 function TopBar() {
 
     return (
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow
+        <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow
         d-flex justify-content-end">
 
 
-            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                <i class="fa fa-bars"></i>
+            <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
+                <i className="fa fa-bars"></i>
             </button>
 
-            <ul class="navbar-nav ml-auto">
-                <div class="topbar-divider d-none d-sm-block"></div>
+            <ul className="navbar-nav ml-auto">
+                <div className="topbar-divider d-none d-sm-block"></div>
 
               
-                <li class="nav-item dropdown no-arrow">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Receptionist</span>
-                        <img style={{width: "50px"}} alt="receptionist" class="img-profile rounded-circle" src="https://www.shutterstock.com/image-vector/transparent-hospital-receptionist-icon-png-260nw-1981161338.jpg" />
+                <li className="nav-item dropdown no-arrow">
+                    <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span className="mr-2 d-none d-lg-inline text-gray-600 small">Receptionist</span>
+                        <img style={{width: "50px"}} alt="receptionist" className="img-profile rounded-circle" src="https://www.shutterstock.com/image-vector/transparent-hospital-receptionist-icon-png-260nw-1981161338.jpg" />
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                        <a class="dropdown-item user-setting" data-user-id="<%= user.id %>" href="#">
-                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                        <a className="dropdown-item user-setting" data-user-id="<%= user.id %>" href="#">
+                            <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                             Settings
                         </a>
-                        <a class="dropdown-item" href="/logout" >
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                        <a className="dropdown-item" href="/logout" >
+                            <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Log out
                         </a>
                     </div>

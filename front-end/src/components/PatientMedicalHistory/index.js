@@ -23,7 +23,7 @@ function PatientMedicalHistory({patientId}) {
         return <></>;
     }
     return (
-        <textarea className="form-control" name="patientMoreInfo" id="patientMoreInfo"
+        <textarea className="form-control" name="patientMoreInfo" id="patientMoreInfo" disabled
         value={healthRecords.map(healthRecord => `${healthRecord.visitDate} - ${healthRecord.diagnosis}`).join('\n')}
         >
 

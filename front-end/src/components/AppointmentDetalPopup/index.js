@@ -12,8 +12,8 @@ function PatientDetailPopup({ appointment, statusValue }) {
     const handleNoteChange = (event) => {
         setNote(event.target.value);
     };
-    const [selectedDoctorId, setSelectedDoctorId] = useState(appointment.doctorInfo.doctorId);
-
+    const [selectedDoctorId, setSelectedDoctorId] = useState();
+    console.log(selectedDoctorId)
     const handleSelectChange = (event) => {
         setSelectedDoctorId(event.target.value);
     };
@@ -28,14 +28,14 @@ function PatientDetailPopup({ appointment, statusValue }) {
 
             const data = appointment;
             data.status = status;
-            if(statusValue === 'PENDING'){
+            if (statusValue === 'PENDING') {
                 data.doctorInfo.doctorId = selectedDoctorId;
                 // data.note = note;
             }
             fetch(
                 `http://localhost:8080/appointment/${appointment.id}`,
                 {
-                    headers:{
+                    headers: {
                         "Content-Type": "application/json",
                     },
                     method: "PUT",
@@ -89,31 +89,31 @@ function PatientDetailPopup({ appointment, statusValue }) {
                         <div className="row">
                             <div className="form-group col-4">
                                 <label className="col-form-label text-label" htmlFor="patientName">Họ và tên:</label>
-                                <input type="text" className="form-control" id="patientName" name="patientName" value={`${appointment.patientInfo.firstName} - ${appointment.patientInfo.lastName}`} />
+                                <input type="text" disabled className="form-control" id="patientName" name="patientName" value={`${appointment.patientInfo.firstName} - ${appointment.patientInfo.lastName}`} />
                             </div>
                             <div className="form-group col-4">
                                 <label className="col-form-label text-label" htmlFor="patientPhone">Số điện thoại:</label>
-                                <input type="text" className="form-control" id="patientPhone" name="patientPhone" value={appointment.patientInfo.phoneNumber} />
+                                <input type="text" disabled className="form-control" id="patientPhone" name="patientPhone" value={appointment.patientInfo.phoneNumber} />
                             </div>
                             <div className="form-group col-4">
                                 <label className="col-form-label text-label" htmlFor="patientEmail">Email:</label>
-                                <input type="email" className="form-control" id="patientEmail" name="patientEmail" value={appointment.patientInfo.email} />
+                                <input type="email" disabled className="form-control" id="patientEmail" name="patientEmail" value={appointment.patientInfo.email} />
                             </div>
                             <div className="form-group col-2">
                                 <label className="col-form-label text-label" htmlFor="patientDate">Ngày đặt lịch:</label>
-                                <input type="text" className="form-control" id="patientDate" name="patientDate" readOnly value={appointment.date} />
+                                <input type="text" disabled className="form-control" id="patientDate" name="patientDate" readOnly value={appointment.date} />
                             </div>
                             <div className="form-group col-2">
                                 <label className="col-form-label text-label" htmlFor="patientTime">Khung giờ:</label>
-                                <input type="text" className="form-control" id="patientTime" name="patientTime" readOnly value={`${appointment.startTime} - ${appointment.endTime}`} />
+                                <input type="text" disabled className="form-control" id="patientTime" name="patientTime" readOnly value={`${appointment.startTime} - ${appointment.endTime}`} />
                             </div>
                             <div className="form-group col-4">
                                 <label className="col-form-label text-label" htmlFor="patientReason">Lí do:</label>
-                                <textarea className="form-control" name="patientReason" id="patientReason">{appointment.reason}</textarea>
+                                <textarea disabled className="form-control" name="patientReason" id="patientReason">{appointment.reason}</textarea>
                             </div>
                             <div className="form-group col-4">
                                 <label className="col-form-label text-label" htmlFor="patientAddress">Địa chỉ:</label>
-                                <textarea className="form-control" name="patientAddress" id="patientAddress">{appointment.patientInfo.address}</textarea>
+                                <textarea disabled className="form-control" name="patientAddress" id="patientAddress">{appointment.patientInfo.address}</textarea>
                             </div>
 
                             <div className="col-12">
@@ -122,13 +122,31 @@ function PatientDetailPopup({ appointment, statusValue }) {
 
                             <div className="form-group col-6">
                                 <label className="col-form-label text-label" htmlFor="patientHistoryBreath">Bác sĩ phụ trách:</label>
-                                <select style={{ height: "60px" }} className="form-control" name="patientHistoryBreath" id="patientHistoryBreath"
-                                 value={selectedDoctorId}
-                                 onChange={handleSelectChange}>
-                                    <DoctorAvailable
-                                        appointment={appointment} />
+                                {appointment.status === 'PENDING' ? (
+                                    <select
+                                        style={{ height: "60px" }}
+                                        className="form-control"
+                                        name="patientHistoryBreath"
+                                        id="patientHistoryBreath"
+                                        value={selectedDoctorId}
+                                        defaultValue={appointment.doctorInfo.doctorId}
+                                        onChange={handleSelectChange}
+                                    >
+                                        <DoctorAvailable appointment={appointment} />
+                                    </select>
+                                ) : (
+                                    <input
+                                        type="text"
+                                        style={{height: "61px"}}
+                                        disabled
+                                        className="form-control"
+                                        name="patientHistoryBreath"
+                                        id="patientHistoryBreath"
+                                        value={`${appointment.doctorInfo.firstName} ${appointment.doctorInfo.lastName}`}
+                                        onChange={handleSelectChange}
+                                    />
+                                )}
 
-                                </select>
                             </div>
 
 
@@ -136,7 +154,7 @@ function PatientDetailPopup({ appointment, statusValue }) {
                                 <label className="col-form-label text-label" htmlFor="patientMoreInfo">Thông tin các lần khám trước:</label>
                                 <PatientMedicalHistory patientId={appointment.patientInfo.patientId} />
                             </div>
-{/* 
+                            {/* 
                             <div className="form-group col-12">
                                 <label className="col-form-label text-label" htmlFor="patientNote">Ghi chú:</label>
                                 <textarea className="form-control" name="patientNote" id="patientNote" value={note}
