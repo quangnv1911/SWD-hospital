@@ -18,16 +18,16 @@ import java.util.List;
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer doctorId;
+    private Long doctorId;
 
     private String firstName;
 
-    private String LastName;
+    private String lastName;
 
-    private String Specialty;
+    private String speciality;
     //Validation of Phone number must start with 0 and be 10 digits long
     @Pattern(regexp = "0[0-9]{9}")
-    private String PhoneNumber;
+    private String phoneNumber;
 
     @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")
     private String email;

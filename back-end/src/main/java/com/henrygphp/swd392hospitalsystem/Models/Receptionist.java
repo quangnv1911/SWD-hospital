@@ -18,18 +18,21 @@ import java.util.List;
 public class Receptionist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer receptionistId;
+    private Long receptionistId;
 
     private String firstName;
 
     private String lastName;
 
     @Pattern(regexp = "0[0-9]{9}")
-    private String PhoneNumber;
+    private String phoneNumber;
 
     @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
     @OneToMany(mappedBy = "receptionist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Appointment> appointmentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "receptionist", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Notification> notificationList = new ArrayList<>();
 }

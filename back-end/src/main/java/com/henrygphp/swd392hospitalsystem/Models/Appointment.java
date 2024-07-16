@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,16 +17,17 @@ import java.time.LocalDateTime;
 public class Appointment {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    private Integer appointmentId;
+    private Long appointmentId;
 
     private LocalDate appointmentDate;
 
-    private LocalDateTime appointmentStartTime;
-    private LocalDateTime appointmentEndTime;
+    private LocalTime appointmentStartTime;
+    private LocalTime appointmentEndTime;
 
     private String reason;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "patientId")
@@ -39,3 +41,4 @@ public class Appointment {
     @JoinColumn(name = "receptionistId")
     private Receptionist receptionist;
 }
+
