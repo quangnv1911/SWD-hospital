@@ -51,4 +51,8 @@ public class Patient {
         this.dob = parse;
         this.gender = gender;
     }
+
+    public Patient(Long patientId) {
+        this.patientId = patientId;
+    }
 }

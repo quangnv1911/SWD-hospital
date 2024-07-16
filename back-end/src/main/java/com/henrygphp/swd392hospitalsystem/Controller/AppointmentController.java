@@ -1,16 +1,18 @@
 package com.henrygphp.swd392hospitalsystem.Controller;
 
 import com.henrygphp.swd392hospitalsystem.DTO.All.AppointmentDTO;
+import com.henrygphp.swd392hospitalsystem.DTO.Req.UpdateAppointmentReqDTO;
 import com.henrygphp.swd392hospitalsystem.DTO.Resp.AddAppointmentRespDTO;
 import com.henrygphp.swd392hospitalsystem.DTO.StatusDTO;
-import com.henrygphp.swd392hospitalsystem.Models.Appointment;
-import com.henrygphp.swd392hospitalsystem.Models.Status;
+import com.henrygphp.swd392hospitalsystem.Models.*;
 import com.henrygphp.swd392hospitalsystem.Services.AppointmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -50,15 +52,26 @@ public class AppointmentController {
 
     // Update appointment
     @PutMapping("/{id}")
-    public ResponseEntity<AppointmentDTO> updateAppointment(@PathVariable Long id, @RequestBody AppointmentDTO appointmentDTO) {
+    public ResponseEntity<UpdateAppointmentReqDTO> updateAppointment(@PathVariable Long id, @RequestBody UpdateAppointmentReqDTO appointmentDTO) {
         //Check if the appointment exists
         Optional<Appointment> appointment = appointmentService.getAppointmentById(id);
         if (appointment.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         else{
-            Optional<Appointment> newAppointment = appointmentService.updateAppointment(appointmentService.convertToEntity(appointmentDTO));
-            return new ResponseEntity<>(appointmentService.convertToDTO(newAppointment.get()), HttpStatus.OK);
+            Appointment newAppointment = new Appointment(
+                    appointmentDTO.getId(),
+                    LocalDate.parse(appointmentDTO.getDate(), DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                    LocalTime.parse(appointmentDTO.getStartTime(), DateTimeFormatter.ofPattern("HH:mm")),
+                    LocalTime.parse(appointmentDTO.getEndTime(), DateTimeFormatter.ofPattern("HH:mm")),
+                    appointmentDTO.getReason(),
+                    appointmentDTO.getStatus(),
+                    new Patient(appointmentDTO.getPatientId()),
+                    new Doctor(appointmentDTO.getDoctorId()),
+                    new Receptionist(appointmentDTO.getReceptionistId())
+            );
+            appointmentService.updateAppointment(newAppointment);
+            return new ResponseEntity<>(appointmentDTO, HttpStatus.OK);
         }
     }
 

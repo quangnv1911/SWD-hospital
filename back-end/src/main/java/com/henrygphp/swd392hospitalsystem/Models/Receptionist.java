@@ -35,4 +35,8 @@ public class Receptionist {
 
     @OneToMany(mappedBy = "receptionist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Notification> notificationList = new ArrayList<>();
+
+    public Receptionist(Long receptionistId) {
+        this.receptionistId = receptionistId;
+    }
 }

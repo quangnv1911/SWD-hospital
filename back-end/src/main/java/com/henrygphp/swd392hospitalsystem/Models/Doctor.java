@@ -37,4 +37,8 @@ public class Doctor {
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PatientHistory> patientHistoryList = new ArrayList<>();
+
+    public Doctor(Long doctorId) {
+        this.doctorId = doctorId;
+    }
 }
