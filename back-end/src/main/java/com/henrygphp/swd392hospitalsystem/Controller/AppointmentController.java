@@ -1,19 +1,14 @@
 package com.henrygphp.swd392hospitalsystem.Controller;
 
 import com.henrygphp.swd392hospitalsystem.DTO.All.AppointmentDTO;
-import com.henrygphp.swd392hospitalsystem.DTO.Req.UpdateAppointmentReqDTO;
-import com.henrygphp.swd392hospitalsystem.DTO.Resp.AddAppointmentRespDTO;
-import com.henrygphp.swd392hospitalsystem.DTO.StatusDTO;
 import com.henrygphp.swd392hospitalsystem.Models.*;
 import com.henrygphp.swd392hospitalsystem.Services.AppointmentService;
+import com.henrygphp.swd392hospitalsystem.Services.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,9 +19,18 @@ import java.util.Optional;
 public class AppointmentController {
     private final AppointmentService appointmentService;
 
+    private final EmailService emailService;
+
     // Add appointment
     @PostMapping("/add")
     public ResponseEntity<Appointment> addAppointment(Appointment appointment) {
+        //send email about new Appointment
+        emailService.sendEmail(appointment.getPatient().getEmail(),
+                "New Appointment",
+                "Your appointment has been scheduled on " +
+                        appointment.getAppointmentDate() +
+                        " from " + appointment.getAppointmentStartTime()+
+                        " to "+appointment.getAppointmentEndTime());
         return new ResponseEntity<>(appointmentService.addAppointment(appointment), HttpStatus.CREATED);
     }
 
@@ -84,7 +88,22 @@ public class AppointmentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         else{
+            String footer = "\n\nPlease be on time and bring your ID card with you.\n\nThank you!";
+
             Optional<Appointment> newAppointment = appointmentService.updateAppointment(appointmentService.convertToEntity(appointmentDTO));
+
+            String patientName = "Dear "+newAppointment.get().getPatient().getFirstName()+" "+newAppointment.get().getPatient().getLastName();
+
+            String contentHeader = "\nYour appointment status has been updated to " + newAppointment.get().getStatus();
+
+            String content = "\nScheduled on " +
+                    newAppointment.get().getAppointmentDate() +
+                    " from " + newAppointment.get().getAppointmentStartTime()+
+                    " to "+newAppointment.get().getAppointmentEndTime();
+
+            //send email about the appointment status
+            emailService.sendEmail(newAppointment.get().getPatient().getEmail(), "Appointment Status", "Your appointment has been updated!\n"+patientName + contentHeader + content + footer);
+
             return new ResponseEntity<>(appointmentService.convertToDTO(newAppointment.get()), HttpStatus.OK);
         }
     }
